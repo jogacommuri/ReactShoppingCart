@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 class Cart extends Component{
 	render(){
 		if(this.props.cart[0]){
-			return this.renderCart();;
+			return this.renderCart();
 		}else{
 			return this.renderEmpty();
 		}
