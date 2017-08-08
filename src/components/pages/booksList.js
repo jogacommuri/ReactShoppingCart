@@ -13,32 +13,14 @@ import Cart from './cart';
 class BooksList extends Component{
 	componentDidMount(){
 		//Diapatch an action
-		this.props.getBooks(
-			[{
-				id: 1,
-				title:'this is a book title',
-				description: "this is a book description",
-				price: 33.33
-			},
-			{
-				id: 2,
-				title:'this is a 2nd book title',
-				description: "this is a 2nd book description",
-				price: 99.99	
-			},{
-				id: 3,
-				title:'this is a 3rd book title',
-				description: "this is a 3rd book description",
-				price: 55.55
-			}]
-		)
+		this.props.getBooks()
 	}
 	render(){
 		const booksList = this.props.books.map(function(booksArr){
 			return(
-				<Col xs={12} sm={6} md={4} lg={4} key={booksArr.id}>
+				<Col xs={12} sm={6} md={4} lg={4} key={booksArr._id}>
 					<BookItem 
-						id={booksArr.id}
+						_id={booksArr._id}
 						title={booksArr.title}
 						description ={booksArr.description}
 						price= {booksArr.price} />
