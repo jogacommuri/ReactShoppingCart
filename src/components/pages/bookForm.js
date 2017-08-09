@@ -5,7 +5,7 @@ import {Well, Panel, FormControl, FormGroup, ControlLabel, Button} from 'react-b
 import {connect} from 'react-redux';
 import {findDOMNode} from 'react-dom';
 import {bindActionCreators} from 'redux';
-import {postBooks} from '../../actions/booksActions';
+import {postBooks, deleteBooks} from '../../actions/booksActions';
 
 class BooksForm extends Component{
 
@@ -17,8 +17,17 @@ class BooksForm extends Component{
 		}]
 		this.props.postBooks(book);
 	}
+	onDelete(){
+		let bookId = findDOMNode(this.refs.delete).value;
+		this.props.deleteBooks(bookId);
+	}
 
 	render(){
+		const booksList = this.props.books.map(function(booksArr){
+			return (
+				<option key={booksArr._id}>{booksArr._id}</option>
+			)
+		})
 		return(
 			<Well>
 				<Panel>
@@ -47,13 +56,32 @@ class BooksForm extends Component{
 					</FormGroup>
 					<Button onClick={this.handleSubmit.bind(this)} bsStyle="primary">Save Book</Button>
 				</Panel>
+				<Panel style={{marginTop: '25px'}}>
+					<FormGroup controlId="formControlsSelect">
+				      <ControlLabel>Select a book to delete</ControlLabel>
+				      <FormControl ref="delete" componentClass="select" placeholder="select">
+				        <option value="select">select</option>
+				        {booksList}
+				      </FormControl>
+				    </FormGroup>
+				    <Button onClick={this.onDelete.bind(this)} bsStyle="danger" > Delete Book </Button>
+				</Panel>
 			</Well>
 		)
 	}
 }
 
-function mapDispatchToProps(dispatch){
-	return bindActionCreators({postBooks},dispatch)
+function mapStateToProps(state){
+	return {
+		books: state.books.books
+	}
 }
 
-export default connect(null, mapDispatchToProps)(BooksForm);
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({
+		postBooks,
+		deleteBooks
+	},dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BooksForm);
