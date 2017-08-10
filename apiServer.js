@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 //APIs
 
-mongoose.createConnection('mongodb://localhost:27017/bookshop',{ useMongoClient: true })
+mongoose.connect('mongodb://localhost:27017/bookshop')
 
 var Books = require('./models/books.js');
 
