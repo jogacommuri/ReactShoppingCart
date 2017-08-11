@@ -4,10 +4,13 @@ import React, {Component} from 'react';
 import {Well, Panel, Col, Row, Button,ButtonGroup, Label, Modal} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {deleteCartItem,updateCart} from '../../actions/cartActions';
+import {deleteCartItem,updateCart, getCart} from '../../actions/cartActions';
 
 
 class Cart extends Component{
+	componentDidMount(){
+		this.props.getCart();
+	}
 	onDelete(_id){
 		//create a copy of the current array of cart
 		const currentCartItemToDelete = this.props.cart
@@ -23,12 +26,12 @@ class Cart extends Component{
 	}
 
 	onIncrement(_id){
-		this.props.updateCart(_id,1);
+		this.props.updateCart(_id,1, this.props.cart);
 	}
 	onDecrement(_id, quantity){
 
 		if(quantity >1){
-			this.props.updateCart(_id,-1);
+			this.props.updateCart(_id,-1, this.props.cart);
 		}
 	}
 	constructor(){
@@ -64,10 +67,10 @@ class Cart extends Component{
 							<h6>{cartArr.title}</h6><span>    </span>
 						</Col>
 						<Col xs={12} sm={2} md={2} lg={2}>
-							<h6>$.{cartArr.price}</h6>
+							<h6>$: {cartArr.price}</h6>
 						</Col>
 						<Col xs={12} sm={2} md={2} lg={2}>
-							<h6>qty.<Label bsStyle="success"> {cartArr.quantity} </Label></h6>
+							<h6>qty: <Label bsStyle="success"> {cartArr.quantity} </Label></h6>
 						</Col>
 						<Col xs={6} sm={4} md={4} lg={4}>
 							<ButtonGroup style={{minWidth:'300px'}}>
@@ -121,7 +124,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
 		deleteCartItem: deleteCartItem,
-		updateCart: updateCart
+		updateCart: updateCart,
+		getCart: getCart
 	}, dispatch)
 }
 
