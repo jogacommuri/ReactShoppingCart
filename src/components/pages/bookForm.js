@@ -57,7 +57,7 @@ class BooksForm extends Component{
 	render(){
 		const booksList = this.props.books.map(function(booksArr){
 			return (
-				<option key={booksArr._id}>{booksArr._id}</option>
+				<option key={booksArr._id}>{booksArr.title}</option>
 			)
 		})
 		const imgList =
