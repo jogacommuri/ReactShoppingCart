@@ -18,8 +18,8 @@ app.use(cookieParser());
 
 //APIs
 
-mongoose.connect('mongodb://localhost:27017/bookshop')
-
+//mongoose.connect('mongodb://localhost:27017/bookshop')
+mongoose.connect('mongodb://test:test@ds161209.mlab.com:61209/bookshop');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, '#MongoDB - connection error'));
 //--->Set UP SESSION<---
